@@ -10,7 +10,7 @@ router.get("/", (req, res, next) => {
     .catch(next);
 });
 
-router.get("/:id", (req, res, next) => {
+router.get("/:collection_id", (req, res, next) => {
   Collection.findById(req.params.collection_id)
     .then((collection) => {
       res.json(collection);
