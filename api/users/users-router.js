@@ -26,18 +26,42 @@ router.post(
   "/login",
   // checkUsernameExists,
   (req, res, next) => {
-    if (bcrypt.compareSync(req.body.password, req.users.password)) {
-      const token = buildToken(req.users);
+    // const { username, password } = req.body;
+    const existingUser = User.findByName({ username: req.body.username });
+    if (!existingUser) {
       res.json({
-        message: `Welcome, ${req.users.username}`,
-        token,
-      });
-    } else {
-      next({
         status: 401,
         message: "Invalid credentials",
       });
     }
+    const doesPasswordMatch = bcrypt.compareSync(
+      req.body.password,
+      existingUser.password
+    );
+    if (!doesPasswordMatch) {
+      res.json({
+        status: 401,
+        message: "Invalid credentials",
+      });
+    } else {
+      const token = buildToken(req.users);
+      res.json({
+        message: `Welcome, ${existingUser.username}`,
+        token,
+      });
+    }
+    // if (bcrypt.compareSync(req.body.password, password)) {
+    //   const token = buildToken(req.users);
+    //   res.json({
+    //     message: `Welcome, ${req.users.username}`,
+    //     token,
+    //   });
+    // } else {
+    //   next({
+    //     status: 401,
+    //     message: "Invalid credentials",
+    //   });
+    // }
   }
 );
 
