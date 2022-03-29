@@ -12,8 +12,9 @@ function findById(user_id) {
   return db("users").where("user_id", user_id).first();
 }
 
-function findByName(username) {
-  return db("users").where("username", username).first();
+async function findByName(username) {
+  const usersName = await db("users").where("username", username).first();
+  return usersName;
 }
 
 async function addUser(newUser) {
