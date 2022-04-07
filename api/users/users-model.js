@@ -22,10 +22,22 @@ async function addUser(newUser) {
   return user;
 }
 
+function updateUser(user_id, changes){
+  return db("users").where({user_id}).update(changes, "*");
+}
+
+const deleteUser = async (user_id) => {
+  const removedUser = await findById(user_id);
+  await db("users").where("user_id", user_id).del();
+  return removedUser;
+};
+
 module.exports = {
   find,
   findBy,
   findById,
   findByName,
   addUser,
+  updateUser,
+  deleteUser,
 };

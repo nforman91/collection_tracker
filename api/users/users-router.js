@@ -67,6 +67,37 @@ router.post(
   }
 );
 
+router.put("/:user_id", (req, res, next) => {
+  const changes = req.body;
+  User.updateUser(req.params.user_id, changes)
+    .then(user => {
+      if(user){
+        res.status(200).json(user)
+      }else{
+        res.status(404).json({ message: "The user could not be found." })
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({ message: "Error updating the user." });
+    });
+});
+
+router.delete("/:user_id", (req, res, next) => {
+  User.deleteUser(req.params.user_id)
+    .then(users => {
+      if(users > 0){
+        res.status(200).json({ message: "The user has been deleted." })
+      }else{
+        res.status(404).json({ message: "The user could not be found." })
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({ message: "Error deleting the user." });
+    });
+});
+
 function buildToken(user) {
   const payload = {
     subject: user.user_id,
