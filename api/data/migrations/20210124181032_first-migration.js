@@ -10,6 +10,7 @@ exports.up = async (knex) => {
       collections.increments("collection_id");
       collections.string("collection_name", 200).notNullable();
       collections.string("collection_type", 200);
+      collections.string("collection_tag", 200);
     });
 };
 
