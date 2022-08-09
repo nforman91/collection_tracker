@@ -12,7 +12,8 @@
     "database:prod": "heroku pg:psql -a collection-trackers",
     "seed:prod": "heroku run knex seed:run -a collection-trackers",
     "test": "cross-env NODE_ENV=testing jest --verbose --runInBand",
-    "deploy": "git push heroku main"
+    "deploy": "git push heroku main",
+    "restart": "npm run rollback && npm run migrate && npm run seed"
   },
   "engines": {
     "node": "16.13.2"

@@ -12,6 +12,8 @@ async function add(newCollection) {
   const [collection] = await db("collections").insert(newCollection, [
     "collection_id",
     "collection_name",
+    "collection_type",
+    "collection_tag"
   ]);
   return collection;
 }
